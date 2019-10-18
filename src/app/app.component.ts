@@ -1,5 +1,5 @@
 import { Component, OnInit, DebugElement } from '@angular/core';
-import { Observable, Observer, Subject, BehaviorSubject, of } from 'rxjs';
+import { Observable, Observer, Subject, BehaviorSubject, of, NextObserver } from 'rxjs';
 
 @Component({
   selector: 'app-ab',
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
 
   userFalse: string;
-  userObs = new Observable();
+  userObs: Observable<string[]>;
 
   // resultJob: Subject<string> = new Subject<string>();
 
@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   conteo2: string[];
   loggedIn: boolean;
   retornarObservable() {
+    // this.resultJob = this.userObs;
+
     return of(this.conteoL);
   }
   // conteoSubject = new Subject();
@@ -47,11 +49,12 @@ export class AppComponent implements OnInit {
           this.resultJob.next(res);
           this.resultJob.subscribe(
             res2 => { this.conteo2 = res2; console.log(this.conteo2); }
-
+            // { next: value => console.log(value), }
           );
           console.log(this.resultJob.value);
         }
       );
+
     /*this.userObs
       .subscribe((res) => {
         this.userFalse = res;
